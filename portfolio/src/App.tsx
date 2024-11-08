@@ -5,6 +5,7 @@ import {About} from "./pages/Aboutpage"
 import {Contact} from "./pages/Contactpage"
 import {Projects} from "./pages/Projectspage"
 import {Skills} from "./pages/Skillspage"
+import { Footer } from "./components/Footer"
 
 export function App() {
   
@@ -19,6 +20,7 @@ export function App() {
       <Route path="/projects" element={<Projects/>} />
       <Route path="/contact" element={<Contact/>} />
       </Routes>
+      <Footer/>
     </div>
     
   )
