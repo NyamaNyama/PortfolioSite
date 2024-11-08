@@ -1,4 +1,10 @@
+import { Routes, Route } from "react-router-dom"
 import {Header} from "./components/Header"
+import {Home} from "./pages/Homepage"
+import {About} from "./pages/Aboutpage"
+import {Contact} from "./pages/Contactpage"
+import {Projects} from "./pages/Projectspage"
+import {Skills} from "./pages/Skillspage"
 
 export function App() {
   
@@ -6,7 +12,15 @@ export function App() {
   return (
     <div>
       <Header/>
+      <Routes>
+      <Route path="/" element={<Home/>} />
+      <Route path="/about" element={<About/>} />
+      <Route path="/skills" element={<Skills/>} />
+      <Route path="/projects" element={<Projects/>} />
+      <Route path="/contact" element={<Contact/>} />
+      </Routes>
     </div>
+    
   )
 }
 
