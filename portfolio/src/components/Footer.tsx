@@ -1,7 +1,7 @@
-import githubIcon from "../assets/icons8-github.svg"
-import telegramIcon from "../assets/icons8-телеграм.svg"
-import steamIcon from "../assets/icons8-steam.svg"
-import discordIcon from "../assets/icons8-discord.svg"
+import githubIcon from "../assets/Icons/icons8-github.svg"
+import telegramIcon from "../assets/Icons/icons8-телеграм.svg"
+import steamIcon from "../assets/Icons/icons8-steam.svg"
+import discordIcon from "../assets/Icons/icons8-discord.svg"
 
 interface SocialLinkProps{
     iconSrc: string;
