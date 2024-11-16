@@ -1,7 +1,8 @@
-import githubIcon from "../assets/Icons/icons8-github.svg"
+import githubIcon from "../assets/Icons/github_logo_94lqwcmbt0ue.svg"
 import telegramIcon from "../assets/Icons/icons8-телеграм.svg"
 import steamIcon from "../assets/Icons/icons8-steam.svg"
 import discordIcon from "../assets/Icons/icons8-discord.svg"
+import "../styles/Footer.css"
 
 interface SocialLinkProps{
     iconSrc: string;
@@ -30,23 +31,25 @@ export const Footer = () =>{
         {
             iconSrc: discordIcon,
             url: 'https://discord.ru',
-            label: 'Discord('
+            label: 'Discord'
         }
       ];
 
       return (
         <footer className="footer">
-            <div>
+            <div className="social-links">
                 {socialLinks.map((link) => (
                     <a
+                        key = {link.url}
                         href={link.url}
                         aria-label={link.label}
-                        
+                        className="social-link"
                     >
-                        <img src={link.iconSrc}></img>
+                        <img src={link.iconSrc} alt ={link.label} className="social-icon"></img>
                     </a>
                 ))}
             </div>
+            <p className="footer-email">Email: tihonshkarin31012004@gmail.com</p>
         </footer>
       );
 };
