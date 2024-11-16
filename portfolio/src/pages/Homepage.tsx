@@ -1,6 +1,9 @@
+import { Layout } from "../components/Layout";
 
 export const Home = () =>{
     return (
-        <h1>Это главная страница</h1>
+        <Layout>
+        <h1>Привет! Меня зовут Шкарин Тихон я студент ДВФУ и начинающий геймдевелопер. В будущем планирую открыть компанию ITxON</h1>
+        </Layout>
     );
 };
