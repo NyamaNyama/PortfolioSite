@@ -6,7 +6,7 @@ import {Contact} from "./pages/Contactpage"
 import {Projects} from "./pages/Projectspage"
 import {Skills} from "./pages/Skillspage"
 import { Footer } from "./components/Footer"
-
+import { socialLinks } from "./data/SocialLinks"
 export function App() {
   
 
@@ -20,7 +20,7 @@ export function App() {
       <Route path="/projects" element={<Projects/>} />
       <Route path="/contact" element={<Contact/>} />
       </Routes>
-      <Footer/>
+      <Footer socialLinks={socialLinks} email ="tihonshkarin31012004@gmail.com"/>
     </div>
     
   )
