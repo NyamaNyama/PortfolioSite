@@ -1,5 +1,5 @@
 import "../styles/Footer.css"
-import { ISocialLink } from "../types/SocialMedia"
+import { ISocialLink } from "../types/SocialLink"
 
 export interface FooterProps{
     socialLinks: ISocialLink[];
