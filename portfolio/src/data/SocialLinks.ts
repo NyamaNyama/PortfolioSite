@@ -1,4 +1,4 @@
-import { ISocialLink} from "../types/SocialMedia"
+import { ISocialLink} from "../types/SocialLink"
 import githubIcon from "../assets/Icons/github_logo_94lqwcmbt0ue.svg"
 import telegramIcon from "../assets/Icons/icons8-телеграм.svg"
 import steamIcon from "../assets/Icons/icons8-steam.svg"
