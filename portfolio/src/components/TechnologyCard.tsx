@@ -8,16 +8,16 @@ export interface TechnologyCardProps{
 
 export const TechnologyCard = ({technology}: TechnologyCardProps) =>{
     return(
-    <div className="skill-card">
-      <img src={technology.logo} alt={technology.name} className="skill-icon" />
-      <div className="skill-info">
-        <h3 className="skill-name">{technology.name}</h3>
-        <p className="skill-experience">Опыт: {technology.experience}</p>
+    <div className="tech-card">
+      <img src={technology.logo} alt={technology.name} className="tech-icon" />
+      <div className="tech-info">
+        <h3 className="tech-name">{technology.name}</h3>
+        <p className="tech-experience">Опыт: {technology.experience}</p>
         <a
           href={technology.doclink}
           target="_blank"
           rel="noopener noreferrer"
-          className="skill-link"
+          className="tech-doc"
         >
           Документация
         </a>
