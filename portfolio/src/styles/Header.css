@@ -1,0 +1,76 @@
+@font-face {
+    font-family: 'Cascadia Code';
+    src: url('../assets/Fonts/CascadiaCodePL-Regular.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+@font-face {
+    font-family: 'Press Start';
+    src: url('../assets/Fonts/PressStart2P-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }  
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }  
+
+  .header {
+    width: 100%;
+    background-color: #010101; 
+    padding: 0px 0px;
+    z-index: 1000; 
+    border: 2px solid #00ff00;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    
+  }
+
+.company-name{
+    color: #00ff00;
+    font-size: 16px;
+    font-family: 'Press Start', monospace;
+    font-weight: bold;
+    padding-left: 20px;
+}
+
+ .navigation{
+    display: flex;
+    justify-content: space-around; 
+    align-items: center;
+    user-select: none;
+    
+ } 
+
+ .nav-link {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    color: #00ff00; 
+    text-decoration: none; 
+    font-family: 'Cascadia Code', monospace;
+    font-size: 15px;
+    padding: 10px 10px; 
+    background-color: transparent; 
+    border: 2px solid transparent;
+    transition: background-color 0.3s;
+    text-align: center;
+    width: 150px;
+    height: 90px; 
+  }
+  
+.nav-link:hover {
+    background-color: #00ff00; 
+    color: #010101; 
+  }
+
+.nav-link:active{
+    transform: scale(0.95);
+  }
+.nav-link:last-child{
+    padding-right: 0px;
+}

@@ -1,0 +1,51 @@
+.tech-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: space-between; 
+  border: 2px solid #00ff00;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #000;
+  box-shadow: 0 0 10px #00ff00;
+  width: 300px; 
+  min-height: 350px; 
+  margin: 10px;
+  overflow: hidden;
+}
+
+.tech-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center; 
+  flex-grow: 1; 
+}
+
+.tech-name {
+  font-size: 1.5em;
+  color: #00ff00;
+  margin: 0;
+}
+
+.tech-experience {
+  font-size: 1em;
+  color: #00ff00;
+  margin: 0;
+}
+
+.tech-doc {
+  color: #00ff00;
+  text-decoration: underline;
+}
+
+.tech-doc:hover {
+  color: #00d800;
+}
+
+.tech-icon {
+  width: 60px;
+  height: 60px;
+}
+

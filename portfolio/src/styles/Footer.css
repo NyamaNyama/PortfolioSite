@@ -1,0 +1,51 @@
+@font-face {
+    font-family: 'Cascadia Code';
+    src: url('../assets/Fonts/CascadiaCodePL-Regular.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+.footer {
+    background-color: #010101;
+    color: #00FF00;
+    text-align: center;
+    padding: 20px;
+    border-top: 2px solid #00FF00;
+    position: static;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px; 
+    margin-bottom: 10px;
+  }
+  
+ 
+  .social-link {
+    display: inline-block;
+    width: 40px; 
+    height: 40px;
+  }
+  
+  
+  .social-icon {
+    width: 100%;
+    height: 100%;
+    filter: brightness(0) saturate(100%) invert(42%) sepia(83%) saturate(542%) hue-rotate(78deg) brightness(103%) contrast(97%);
+    transition: filter 0.3s ease;
+  }
+  
+  .social-icon:hover {
+    filter: brightness(0) saturate(100%) invert(30%) sepia(94%) saturate(1246%) hue-rotate(122deg) brightness(95%) contrast(90%);
+  }
+
+  .footer-email{
+    font-family: 'Cascadia Code', monospace;
+    margin-top: 10px;
+    font-size: 14px;
+  }
