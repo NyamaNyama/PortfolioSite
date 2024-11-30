@@ -39,13 +39,13 @@ export const Contact = () =>{
                 </div>
                 <div className="form-group">
                 <label htmlFor="message">Сообщение:</label>
-                <textarea
+                <textarea className="message"
                     id="message"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                 />
                 </div>
-                <button type="submit">Отправить</button>
+                <button className="sendButton" type="submit">Отправить</button>
             </form>
         </div>
         </Layout>

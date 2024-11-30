@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'Cascadia Code';
+    src: url('../assets/Fonts/CascadiaCodePL-Regular.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .contacts-container {
     display: flex;
     flex-direction: column;
@@ -35,7 +42,9 @@
     font-family: "Cascadia Code", monospace;
   }
   
-  button {
+  .sendButton {
+    font-family: 'Cascadia Code', monospace; 
+    font-size: inherit;
     background-color: #00ff00;
     color: #000;
     border: none;
@@ -44,6 +53,10 @@
     border-radius: 5px;
   }
   
-  button:hover {
+  .sendButton:hover {
     background-color: #00cc00;
+  }
+
+  .message{
+    resize: none;
   }
