@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Layout } from "../components/Layout";
 import { IValidationError } from "../types/ValidationError";
+import { ThankYouMessage } from "../components/ThankYouMessage";
 import { validateForm } from "../utils/validation";
 import "../styles/Contact.css"
 
@@ -9,6 +10,7 @@ export const Contact = () =>{
     const [email, setEmail] = useState<string>("");
     const [message, setMessage] = useState<string>("");
     const [errors, setErrors] = useState<IValidationError>({});
+    const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -18,10 +20,11 @@ export const Contact = () =>{
         const newErrors = validateForm({ validError });
     
         if (Object.keys(newErrors).length === 0) {
-          setName("");
-          setEmail("");
-          setMessage("");
-          setErrors({});
+            setIsSubmitted(true);
+            setName("");
+            setEmail("");
+            setMessage("");
+            setErrors({});
         } else {
           setErrors(newErrors);
         }
@@ -31,6 +34,9 @@ export const Contact = () =>{
         <Layout>
         <div className="contacts-container">
             <h2>Свяжитесь со мной</h2>
+            {isSubmitted ? (
+                <ThankYouMessage onReset={() => setIsSubmitted(false)} />
+            ) : (
             <form className="contact-form" onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="name">Имя:</label>
@@ -63,6 +69,7 @@ export const Contact = () =>{
                 </div>
                 <button className="sendButton" type="submit">Отправить</button>
             </form>
+        )}
         </div>
         </Layout>
     );
