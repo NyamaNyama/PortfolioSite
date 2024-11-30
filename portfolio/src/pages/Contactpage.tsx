@@ -1,36 +1,29 @@
 import { useState } from "react";
 import { Layout } from "../components/Layout";
+import { IValidationError } from "../types/ValidationError";
+import { validateForm } from "../utils/validation";
 import "../styles/Contact.css"
 
 export const Contact = () =>{
     const [name, setName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [message, setMessage] = useState<string>("");
-    const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
+    const [errors, setErrors] = useState<IValidationError>({});
 
-    const validate = (): boolean => {
-        const newErrors: { name?: string; email?: string; message?: string } = {};
-    
-        if (!name.trim()) newErrors.name = "Укажите ваше имя";
-        if (!email.trim()) {
-          newErrors.email = "Укажите свой email";
-        } else if (!/\S+@\S+\.\S+/.test(email)) {
-          newErrors.email = "Неверный формат email";
-        }
-        if (!message.trim()) newErrors.message = "Сообщение не должно быть пустым";
-    
-        setErrors(newErrors);
-        return Object.keys(newErrors).length === 0;
-      };
-
-      const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (validate()) {
-          alert("Сообщение отправлено!");
+
+        const validError = { name, email, message };
+    
+        const newErrors = validateForm({ validError });
+    
+        if (Object.keys(newErrors).length === 0) {
           setName("");
           setEmail("");
           setMessage("");
           setErrors({});
+        } else {
+          setErrors(newErrors);
         }
       };
 
