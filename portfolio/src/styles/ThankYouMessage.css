@@ -1,0 +1,21 @@
+@font-face {
+    font-family: 'Cascadia Code';
+    src: url('../assets/Fonts/CascadiaCodePL-Regular.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.resetButton{
+    font-family: 'Cascadia Code', monospace; 
+    font-size: inherit;
+    background-color: #00ff00;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.resetButton:hover{
+    background-color: #00cc00;
+}

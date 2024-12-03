@@ -1,0 +1,99 @@
+@font-face {
+  font-family: 'Cascadia Code';
+  src: url('../assets/Fonts/CascadiaCodePL-Regular.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.projects-container {
+  background-color: #000;
+  color: #00ff00;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.projects-container h2 {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 30px;
+}
+
+.filter {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.filter label {
+  margin-right: 10px;
+  font-size: 1.2em;
+}
+
+.filter select {
+  background-color: #333;
+  color: #00ff00;
+  border: 2px solid #00ff00;
+  padding: 10px;
+  font-size: 1.1em;
+  cursor: pointer;
+  font-family: 'Cascadia Code', monospace;
+  width: 200px;
+}
+
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap:20px;
+}
+
+.project-card {
+  background-color: #1a1a1a;
+  border: 2px solid #00ff00;
+  padding: 20px;
+  margin: 15px 0;
+  width: 80%;
+  max-width: 800px;
+  box-shadow: 0 0 15px #00ff00;
+  border-radius: 8px;
+  color: #00ff00;
+  text-align: center; 
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.project-card h3 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.project-card p {
+  margin: 10px 0;
+}
+
+.project-card .tech {
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.project-card a {
+  color: #00ff00;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.project-card a:hover {
+  text-decoration: underline;
+}
+
+.projects-list {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: center; 
+}
+
+.project-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px #00ff00; 
+}
