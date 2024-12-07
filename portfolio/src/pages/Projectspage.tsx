@@ -15,14 +15,16 @@ export const Projects = () => {
     const [selectedTech, setSelectedTech] = useState<string>("All");
     const [showAddForm, setShowAddForm] = useState<boolean>(false);
 
-  const [newProjectTitle, setNewProjectTitle] = useState<string>("");
-  const [newProjectDescription, setNewProjectDescription] = useState<string>("");
-  const [newProjectTechnologies, setNewProjectTechnologies] = useState<string>("");
-  const [newProjectLink, setNewProjectLink] = useState<string>("");
+    const [newProjectTitle, setNewProjectTitle] = useState<string>("");
+    const [newProjectDescription, setNewProjectDescription] = useState<string>("");
+    const [newProjectTechnologies, setNewProjectTechnologies] = useState<string>("");
+    const [newProjectLink, setNewProjectLink] = useState<string>("");
   
     useEffect(() => {
-      dispatch(setProjects(dataProjects));
-    }, [dispatch]);
+        if (projects.length === 0 && localStorage.getItem('projects') === null) {
+            dispatch(setProjects(dataProjects));
+        }
+    }, [dispatch, projects.length]);
   
     const handleAddProject = () => {
       if (
@@ -86,83 +88,83 @@ export const Projects = () => {
     return (
       <Layout>
         {showAddForm ? (
-  <div className="add-project-form">
-    <h3>Добавить новый проект</h3>
-    <form onSubmit={(e) => e.preventDefault()}>
-      <input
-        type="text"
-        placeholder="Название проекта"
-        value={newProjectTitle}
-        onChange={(e) => setNewProjectTitle(e.target.value)}
-        className="form-input"
-      />
-      <textarea
-        placeholder="Описание проекта"
-        value={newProjectDescription}
-        onChange={(e) => setNewProjectDescription(e.target.value)}
-        className="form-textarea"
-      />
-      <input
-        type="text"
-        placeholder="Технологии (через запятую)"
-        value={newProjectTechnologies}
-        onChange={(e) => setNewProjectTechnologies(e.target.value)}
-        className="form-input"
-      />
-      <input
-        type="text"
-        placeholder="Ссылка на проект"
-        value={newProjectLink}
-        onChange={(e) => setNewProjectLink(e.target.value)}
-        className="form-input"
-      />
-      <div className="form-buttons-container">
-        <button onClick={handleAddProject} className="form-button">
-          Добавить проект
-        </button>
-        <button onClick={() => setShowAddForm(false)} className="back-button">
-          Назад
-        </button>
-      </div>
-    </form>
-  </div>
-) : (
-  <>
-    <h2>Мои проекты</h2>
-    <button onClick={() => setShowAddForm(true)} className="form-button">
-      Добавить проект
-    </button>
-    <div className="filter">
-      <label htmlFor="technology-filter">Выберите технологию:</label>
-      <select
-        id="technology-filter"
-        value={selectedTech}
-        onChange={(e) => setSelectedTech(e.target.value)}
-        className="form-input"
-      >
-        <option value="All">Все технологии</option>
-        <option value="React">React</option>
-        <option value="TypeScript">TypeScript</option>
-        <option value="JavaScript">JavaScript</option>
-        <option value="Unity">Unity</option>
-        <option value="Vue">Vue</option>
-        <option value="Electron">Electron</option>
-      </select>
-    </div>
-    <div className="projects-list">
-      {filteredProjects.map((project) => (
-        <div key={project.id} className="project-card">
-          <h3>{project.title}</h3>
-          <p>{project.description}</p>
-          <p className="tech">Технологии: {project.technologies.join(", ")}</p>
-          <a href={project.link} target="_blank" rel="noopener noreferrer">
-            Перейти на GitHub
-          </a>
-        </div>
-      ))}
-    </div>
-  </>
-)}
+            <div className="add-project-form">
+                <h3>Добавить новый проект</h3>
+                <form onSubmit={(e) => e.preventDefault()}>
+                <input
+                    type="text"
+                    placeholder="Название проекта"
+                    value={newProjectTitle}
+                    onChange={(e) => setNewProjectTitle(e.target.value)}
+                    className="form-input"
+                />
+                <textarea
+                    placeholder="Описание проекта"
+                    value={newProjectDescription}
+                    onChange={(e) => setNewProjectDescription(e.target.value)}
+                    className="form-textarea"
+                />
+                <input
+                    type="text"
+                    placeholder="Технологии (через запятую)"
+                    value={newProjectTechnologies}
+                    onChange={(e) => setNewProjectTechnologies(e.target.value)}
+                    className="form-input"
+                />
+                <input
+                    type="text"
+                    placeholder="Ссылка на проект"
+                    value={newProjectLink}
+                    onChange={(e) => setNewProjectLink(e.target.value)}
+                    className="form-input"
+                />
+                <div className="form-buttons-container">
+                    <button onClick={handleAddProject} className="form-button">
+                    Добавить проект
+                    </button>
+                    <button onClick={() => setShowAddForm(false)} className="back-button">
+                    Назад
+                    </button>
+                </div>
+                </form>
+            </div>
+            ) : (
+            <>
+                <h2>Мои проекты</h2>
+                <button onClick={() => setShowAddForm(true)} className="form-button">
+                Добавить проект
+                </button>
+                <div className="filter">
+                <label htmlFor="technology-filter">Выберите технологию:</label>
+                <select
+                    id="technology-filter"
+                    value={selectedTech}
+                    onChange={(e) => setSelectedTech(e.target.value)}
+                    className="form-input"
+                >
+                    <option value="All">Все технологии</option>
+                    <option value="React">React</option>
+                    <option value="TypeScript">TypeScript</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="Unity">Unity</option>
+                    <option value="Vue">Vue</option>
+                    <option value="Electron">Electron</option>
+                </select>
+                </div>
+                <div className="projects-list">
+                {filteredProjects.map((project) => (
+                    <div key={project.id} className="project-card">
+                    <h3>{project.title}</h3>
+                    <p>{project.description}</p>
+                    <p className="tech">Технологии: {project.technologies.join(", ")}</p>
+                    <a href={project.link} target="_blank" rel="noopener noreferrer">
+                        Перейти на GitHub
+                    </a>
+                    </div>
+                ))}
+                </div>
+            </>
+        )}
       </Layout>
     );
   };
