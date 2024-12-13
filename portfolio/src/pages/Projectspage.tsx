@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { Layout } from "../components/Layout";
 import { projects as dataProjects } from '../data/Projects';
 import "../styles/Projects.css";
@@ -89,18 +89,20 @@ export const Projects = () => {
       setNewProjectLink("");
     };
   
-    const filteredProjects = projects.filter((project) =>
-      selectedTech === "All"
-        ? true
-        : project.technologies.includes(selectedTech)
-    );
+    const filteredProjects = useMemo(() => {
+      return projects.filter((project) =>
+        selectedTech === "All"
+          ? true
+          : project.technologies.includes(selectedTech)
+      );
+    }, [projects, selectedTech]);
   
     return (
       <Layout>
         {showAddForm ? (
             <div className="add-project-form">
                 <h3>Добавить новый проект</h3>
-                {errorMessage && <p className="error-message">{errorMessage}</p>} 
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
                 <form onSubmit={(e) => e.preventDefault()}>
                 <input
                     type="text"
