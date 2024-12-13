@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../store';
 import { setProjects, addProject } from '../store/projectsSlice';
 import {v4 as uuidv4} from 'uuid';
+import { IProject } from '../types/Project';
 
 
 
@@ -73,7 +74,7 @@ export const Projects = () => {
         return;
       }
   
-      const newProject = {
+      const newProject: IProject = {
         id: generateNumericId(), 
         title: newProjectTitle,
         description: newProjectDescription,
