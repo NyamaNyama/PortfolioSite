@@ -3,10 +3,10 @@ import { Layout } from "../components/Layout";
 import { projects as dataProjects } from '../data/Projects';
 import "../styles/Projects.css";
 import { useSelector, useDispatch } from 'react-redux';
- import { RootState, AppDispatch } from '../store';
- import { setProjects, addProject } from '../store/projectsSlice';
+import { RootState, AppDispatch } from '../store';
+import { setProjects, addProject } from '../store/projectsSlice';
 
-import "../styles/Projects.css"
+
 
 export const Projects = () => {
     const projects = useSelector((state: RootState) => state.projects.items);
