@@ -21,6 +21,8 @@ export const Projects = () => {
     const [newProjectTechnologies, setNewProjectTechnologies] = useState<string>("");
     const [newProjectLink, setNewProjectLink] = useState<string>("");
 
+    const [errorMessage, setErrorMessage] = useState<string>("");
+
     const generateNumericId = ():number => {
       const uuid = uuidv4(); 
     const numericId = parseInt(uuid.replace(/-/g, '').slice(0, 15), 16);
@@ -34,13 +36,14 @@ export const Projects = () => {
     }, [dispatch, projects.length]);
   
     const handleAddProject = () => {
+      setErrorMessage(""); 
       if (
         !newProjectTitle ||
         !newProjectDescription ||
         !newProjectTechnologies ||
         !newProjectLink
       ) {
-        alert("Пожалуйста, заполните все поля.");
+        setErrorMessage("Пожалуйста, заполните все поля.");
         return;
       }
   
@@ -62,9 +65,9 @@ export const Projects = () => {
       );
   
       if (!isValidTech) {
-        alert(
+        setErrorMessage(
           `Указаны недопустимые технологии. Допустимые технологии: ${validTechnologies.join(
-            ", "
+              ", "
           )}`
         );
         return;
@@ -97,6 +100,7 @@ export const Projects = () => {
         {showAddForm ? (
             <div className="add-project-form">
                 <h3>Добавить новый проект</h3>
+                {errorMessage && <p className="error-message">{errorMessage}</p>} 
                 <form onSubmit={(e) => e.preventDefault()}>
                 <input
                     type="text"
