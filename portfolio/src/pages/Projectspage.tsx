@@ -5,6 +5,7 @@ import "../styles/Projects.css";
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../store';
 import { setProjects, addProject } from '../store/projectsSlice';
+import {v4 as uuidv4} from 'uuid';
 
 
 
@@ -19,7 +20,13 @@ export const Projects = () => {
     const [newProjectDescription, setNewProjectDescription] = useState<string>("");
     const [newProjectTechnologies, setNewProjectTechnologies] = useState<string>("");
     const [newProjectLink, setNewProjectLink] = useState<string>("");
-  
+
+    const generateNumericId = ():number => {
+      const uuid = uuidv4(); 
+    const numericId = parseInt(uuid.replace(/-/g, '').slice(0, 15), 16);
+    return numericId;
+  };
+
     useEffect(() => {
         if (projects.length === 0 && localStorage.getItem('projects') === null) {
             dispatch(setProjects(dataProjects));
@@ -64,7 +71,7 @@ export const Projects = () => {
       }
   
       const newProject = {
-        id: projects.length + 1, 
+        id: generateNumericId(), 
         title: newProjectTitle,
         description: newProjectDescription,
         technologies: techArray,
