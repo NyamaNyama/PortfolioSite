@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
+import { useForm, SubmitHandler } from "react-hook-form";
 import { Layout } from "../components/Layout";
 import { projects as dataProjects } from '../data/Projects';
 import "../styles/Projects.css";
@@ -7,7 +8,7 @@ import { RootState, AppDispatch } from '../store';
 import { setProjects, addProject } from '../store/projectsSlice';
 import {v4 as uuidv4} from 'uuid';
 import { IProject } from '../types/Project';
-
+import {IProjectFormInputs} from '../types/ProjectFormInputs';
 
 
 export const Projects = () => {
@@ -17,12 +18,13 @@ export const Projects = () => {
     const [selectedTech, setSelectedTech] = useState<string>("All");
     const [showAddForm, setShowAddForm] = useState<boolean>(false);
 
-    const [newProjectTitle, setNewProjectTitle] = useState<string>("");
-    const [newProjectDescription, setNewProjectDescription] = useState<string>("");
-    const [newProjectTechnologies, setNewProjectTechnologies] = useState<string>("");
-    const [newProjectLink, setNewProjectLink] = useState<string>("");
-
-    const [errorMessage, setErrorMessage] = useState<string>("");
+    const {
+      register,
+      handleSubmit,
+      reset,
+      setError,
+      formState: { errors },
+    } = useForm<IProjectFormInputs>();
 
     const generateNumericId = ():number => {
       const uuid = uuidv4(); 
@@ -36,18 +38,8 @@ export const Projects = () => {
         }
     }, [dispatch, projects.length]);
   
-    const handleAddProject = () => {
-      setErrorMessage(""); 
-      if (
-        !newProjectTitle ||
-        !newProjectDescription ||
-        !newProjectTechnologies ||
-        !newProjectLink
-      ) {
-        setErrorMessage("Пожалуйста, заполните все поля.");
-        return;
-      }
-  
+     const handleAddProject: SubmitHandler<IProjectFormInputs> = (data) => {
+
       const validTechnologies = [
         "React",
         "TypeScript",
@@ -56,38 +48,34 @@ export const Projects = () => {
         "Vue",
         "Electron",
       ];
-  
-      const techArray = newProjectTechnologies
-        .split(",")
-        .map((tech) => tech.trim());
-  
+
+      const techArray = data.technologies
+      .split(",") 
+      .map((tech) => tech.trim());
+
       const isValidTech = techArray.every((tech) =>
         validTechnologies.includes(tech)
-      );
+    );
   
-      if (!isValidTech) {
-        setErrorMessage(
-          `Указаны недопустимые технологии. Допустимые технологии: ${validTechnologies.join(
-              ", "
-          )}`
-        );
-        return;
-      }
+    if (!isValidTech) {
+      setError("technologies", {
+          type: "manual",
+          message: `Указаны недопустимые технологии. Допустимые технологии: ${validTechnologies.join(", ")}`,
+      });
+      return;
+  }
   
-      const newProject: IProject = {
-        id: generateNumericId(), 
-        title: newProjectTitle,
-        description: newProjectDescription,
-        technologies: techArray,
-        link: newProjectLink,
-      };
+       const newProject: IProject = {
+        id: generateNumericId(),
+        title: data.title,
+        description: data.description,
+        technologies: techArray, 
+        link: data.link,
+    };
   
       dispatch(addProject(newProject));
-  
-      setNewProjectTitle("");
-      setNewProjectDescription("");
-      setNewProjectTechnologies("");
-      setNewProjectLink("");
+      reset();
+      setShowAddForm(false);
     };
   
     const filteredProjects = useMemo(() => {
@@ -103,42 +91,37 @@ export const Projects = () => {
         {showAddForm ? (
             <div className="add-project-form">
                 <h3>Добавить новый проект</h3>
-                {errorMessage && <p className="error-message">{errorMessage}</p>}
-                <form onSubmit={(e) => e.preventDefault()}>
+                <form onSubmit={handleSubmit(handleAddProject)}>
                 <input
                     type="text"
                     placeholder="Название проекта"
-                    value={newProjectTitle}
-                    onChange={(e) => setNewProjectTitle(e.target.value)}
+                    {...register("title", { required: "Название проекта обязательно" })}
                     className="form-input"
                 />
+                {errors.title && <p className="error-message">{errors.title.message}</p>}
                 <textarea
                     placeholder="Описание проекта"
-                    value={newProjectDescription}
-                    onChange={(e) => setNewProjectDescription(e.target.value)}
+                    {...register("description", { required: "Описание проекта обязательно" })}
                     className="form-textarea"
                 />
+                 {errors.description && <p className="error-message">{errors.description.message}</p>}
                 <input
                     type="text"
                     placeholder="Технологии (через запятую)"
-                    value={newProjectTechnologies}
-                    onChange={(e) => setNewProjectTechnologies(e.target.value)}
+                    {...register("technologies", { required: "Укажите технологии" })}
                     className="form-input"
                 />
+                {errors.technologies && <p className="error-message">{errors.technologies.message}</p>}
                 <input
                     type="text"
                     placeholder="Ссылка на проект"
-                    value={newProjectLink}
-                    onChange={(e) => setNewProjectLink(e.target.value)}
+                    {...register("link", { required: "Ссылка на проект обязательна" })}
                     className="form-input"
                 />
+                {errors.link && <p className="error-message">{errors.link.message}</p>}
                 <div className="form-buttons-container">
-                    <button onClick={handleAddProject} className="form-button">
-                    Добавить проект
-                    </button>
-                    <button onClick={() => setShowAddForm(false)} className="back-button">
-                    Назад
-                    </button>
+                            <button type="submit" className="form-button">Добавить проект</button>
+                            <button type="button" onClick={() => setShowAddForm(false)} className="back-button">Назад</button>
                 </div>
                 </form>
             </div>
