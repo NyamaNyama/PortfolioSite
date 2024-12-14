@@ -1,55 +1,51 @@
-import { useState } from 'react';
-import { Layout } from "../components/Layout";
-import { projects } from '../data/Projects';
-import { IProject } from '../types/Project';
-import "../styles/Projects.css"
+import { useEffect, useState, useMemo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../store';
+import { setProjects } from '../store/projectsSlice';
+import { projects as dataProjects } from '../data/Projects';
+import { Layout } from '../components/Layout';
+import { ProjectFilter } from '../components/ProjectFilter';
+import { ProjectList } from '../components/ProjectList';
+import { AddProjectForm } from '../components/AddProjectForm';
+import '../styles/Projects.css';
 
-export const Projects = () =>{
-    const [selectedTech, setSelectedTech] = useState<string>('All');
+export const Projects = () => {
+  const projects = useSelector((state: RootState) => state.projects.items);
+  const dispatch = useDispatch<AppDispatch>();
 
+  const [selectedTech, setSelectedTech] = useState<string>('All');
+  const [showAddForm, setShowAddForm] = useState<boolean>(false);
 
-    const filteredProjects = projects.filter((project) =>
+  useEffect(() => {
+    const savedProjects = localStorage.getItem('projects');
+
+    if (savedProjects) {
+      dispatch(setProjects(JSON.parse(savedProjects)));
+    } else if (projects.length === 0) {
+      dispatch(setProjects(dataProjects));
+    }
+  }, [dispatch, projects.length]);
+
+  const filteredProjects = useMemo(() => {
+    return projects.filter((project) =>
       selectedTech === 'All' ? true : project.technologies.includes(selectedTech)
     );
-    return (
-        <Layout>
-        <h2>Мои проекты</h2>
-        <div className="filter">
-        <label htmlFor="technology-filter">Выберите технологию: </label>
-        <select
-            id="technology-filter"
-            value={selectedTech}
-            onChange={(e) => setSelectedTech(e.target.value)}
-        >
-            <option value="All">Все технологии</option>
-            <option value="React">React</option>
-            <option value="TypeScript">TypeScript</option>
-            <option value="JavaScript">JavaScript</option>
-            <option value="Unity">Unity</option>
-            <option value="Vue">Vue</option>
-            <option value="Electron">Electron</option>
-        </select>
-        </div>
+  }, [projects, selectedTech]);
 
-
-        <div className="projects-list">
-        {filteredProjects.length > 0 ? (
-            filteredProjects.map((project: IProject) => (
-            <div key={project.id} className="project-card">
-                <h3>{project.title}</h3>
-                <p>{project.description}</p>
-                <p className="tech">
-                Технологии: {project.technologies.join(', ')}
-                </p>
-                <a href={project.link} target="_blank" rel="noopener noreferrer">
-                Перейти на GitHub
-                </a>
-            </div>
-            ))
-        ) : (
-            <p>Проекты не найдены</p>
-        )}
-        </div>
-        </Layout>
-    );
+  return (
+    <Layout>
+      {showAddForm ? (
+        <AddProjectForm onClose={() => setShowAddForm(false)} />
+      ) : (
+        <>
+          <h2>Мои проекты</h2>
+          <button onClick={() => setShowAddForm(true)} className="form-button">
+            Добавить проект
+          </button>
+          <ProjectFilter selectedTech={selectedTech} onFilterChange={setSelectedTech} />
+          <ProjectList projects={filteredProjects} />
+        </>
+      )}
+    </Layout>
+  );
 };

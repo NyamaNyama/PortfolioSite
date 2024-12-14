@@ -1,0 +1,64 @@
+@font-face {
+    font-family: 'Cascadia Code';
+    src: url('../assets/Fonts/CascadiaCodePL-Regular.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.add-project-form {
+    margin: 20px auto;
+    padding: 20px;
+    border: 2px solid #00ff00;
+    background-color: #000;
+    border-radius: 10px;
+    max-width: 600px;
+    color: #00ff00;
+}
+  
+.add-project-form h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+}
+  
+.form-input, .form-textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 2px solid #00ff00;
+    background-color: #1a1a1a;
+    color: #00ff00;
+    font-size: 1em;
+    font-family: 'Cascadia Code', monospace;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+  
+.form-textarea {
+    resize: none;
+}
+  
+.form-buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+  
+.form-button, .back-button {
+    background-color: #00ff00;
+    color: #000;
+    border: 2px solid #00ff00;
+    padding: 10px 20px;
+    font-size: 1em;
+    font-family: 'Cascadia Code', monospace;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 10px;
+    transition: background-color 0.3s, color 0.3s;
+}
+  
+.form-button:hover, .back-button:hover {
+    background-color: #000;
+    color: #00ff00;
+}
+  
