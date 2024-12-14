@@ -32,11 +32,15 @@ export const Projects = () => {
     return numericId;
   };
 
-    useEffect(() => {
-        if (projects.length === 0 && localStorage.getItem('projects') === null) {
-            dispatch(setProjects(dataProjects));
-        }
-    }, [dispatch, projects.length]);
+  useEffect(() => {
+    const savedProjects = localStorage.getItem("projects");
+  
+    if (savedProjects) {
+      dispatch(setProjects(JSON.parse(savedProjects)));
+    } else if (projects.length === 0) {
+      dispatch(setProjects(dataProjects));
+    }
+  }, [dispatch, projects.length]);
   
      const handleAddProject: SubmitHandler<IProjectFormInputs> = (data) => {
 
@@ -74,6 +78,7 @@ export const Projects = () => {
     };
   
       dispatch(addProject(newProject));
+      localStorage.setItem("projects", JSON.stringify([...projects, newProject]));
       reset();
       setShowAddForm(false);
     };
