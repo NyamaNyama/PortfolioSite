@@ -1,0 +1,31 @@
+@font-face {
+    font-family: 'Cascadia Code';
+    src: url('../assets/Fonts/CascadiaCodePL-Regular.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.filter {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    text-align: center;
+}
+  
+.filter label {
+    margin-right: 10px;
+    font-size: 1.2em;
+}
+  
+.filter select {
+    background-color: #333;
+    color: #00ff00;
+    border: 2px solid #00ff00;
+    padding: 10px;
+    font-size: 1.1em;
+    cursor: pointer;
+    font-family: 'Cascadia Code', monospace;
+    width: 200px;
+    border-radius: 5px;
+}
+  
