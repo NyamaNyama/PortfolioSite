@@ -1,8 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../store';
-import { setProjects } from '../store/projectsSlice';
-import { projects as dataProjects } from '../data/Projects';
+import { setProjects, fetchProjectsFromGitHub } from '../store/projectsSlice';
 import { Layout } from '../components/Layout';
 import { ProjectFilter } from '../components/ProjectFilter';
 import { ProjectList } from '../components/ProjectList';
@@ -11,6 +10,7 @@ import '../styles/Projects.css';
 
 export const Projects = () => {
   const projects = useSelector((state: RootState) => state.projects.items);
+  const projectStatus = useSelector((state: RootState) => state.projects.status);
   const dispatch = useDispatch<AppDispatch>();
 
   const [selectedTech, setSelectedTech] = useState<string>('All');
@@ -21,10 +21,14 @@ export const Projects = () => {
 
     if (savedProjects) {
       dispatch(setProjects(JSON.parse(savedProjects)));
-    } else if (projects.length === 0) {
-      dispatch(setProjects(dataProjects));
+    } else if (projects.length === 0 && projectStatus === 'idle') {
+      dispatch(fetchProjectsFromGitHub('NyamaNyama')).then((action) => {
+        if (action.type === 'projects/fetchFromGitHub/fulfilled') {
+          localStorage.setItem('projects', JSON.stringify(action.payload));
+        }
+      });
     }
-  }, [dispatch, projects.length]);
+  }, [dispatch, projects.length, projectStatus]);
 
   const filteredProjects = useMemo(() => {
     return projects.filter((project) =>
