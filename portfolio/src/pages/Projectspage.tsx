@@ -6,11 +6,13 @@ import { Layout } from '../components/Layout';
 import { ProjectFilter } from '../components/ProjectFilter';
 import { ProjectList } from '../components/ProjectList';
 import { AddProjectForm } from '../components/AddProjectForm';
+import { Spinner } from '../components/Spinner';
 import '../styles/Projects.css';
 
 export const Projects = () => {
   const projects = useSelector((state: RootState) => state.projects.items);
   const projectStatus = useSelector((state: RootState) => state.projects.status);
+  const projectError = useSelector((state: RootState) => state.projects.error);
   const dispatch = useDispatch<AppDispatch>();
 
   const [selectedTech, setSelectedTech] = useState<string>('All');
@@ -36,6 +38,14 @@ export const Projects = () => {
     );
   }, [projects, selectedTech]);
 
+  if (projectStatus === 'loading') {
+    return (
+      <Layout>
+        <Spinner /> 
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       {showAddForm ? (
@@ -43,6 +53,7 @@ export const Projects = () => {
       ) : (
         <>
           <h2>Мои проекты</h2>
+          {projectError && <p className="error-message">Ошибка: {projectError}</p>}
           <button onClick={() => setShowAddForm(true)} className="form-button">
             Добавить проект
           </button>
