@@ -3,9 +3,11 @@ import projectsReducer from './projectsSlice';
 import { IProject } from '../types/Project';
 
 type PreloadedState = {
-    projects: {
-      items: IProject[];
-    };
+  projects: {
+    items: IProject[];
+    status: 'idle' | 'loading' | 'succeeded' | 'failed';
+    error: string | null;
+  };
 };
 
 const isValidProject = (project: IProject) => {
@@ -34,9 +36,11 @@ const loadProjectsFromLocalStorage = (): PreloadedState['projects']['items'] => 
 };
 
 const preloadedState: PreloadedState = {
-    projects: {
-      items: loadProjectsFromLocalStorage(),
-    },
+  projects: {
+    items: loadProjectsFromLocalStorage(),
+    status: 'idle',
+    error: null,
+  },
 };
 
 export const store = configureStore({

@@ -19,18 +19,28 @@ export const Projects = () => {
   const [showAddForm, setShowAddForm] = useState<boolean>(false);
 
   useEffect(() => {
-    const savedProjects = localStorage.getItem('projects');
-
-    if (savedProjects) {
-      dispatch(setProjects(JSON.parse(savedProjects)));
-    } else if (projects.length === 0 && projectStatus === 'idle') {
-      dispatch(fetchProjectsFromGitHub('NyamaNyama')).then((action) => {
-        if (action.type === 'projects/fetchFromGitHub/fulfilled') {
-          localStorage.setItem('projects', JSON.stringify(action.payload));
-        }
-      });
+    if (projectStatus === 'idle') {
+      dispatch(fetchProjectsFromGitHub('NyamaNyama'))
+        .then((action) => {
+          if (action.type === 'projects/fetchFromGitHub/fulfilled') {
+            localStorage.setItem('projects', JSON.stringify(action.payload));
+          } else if (action.type === 'projects/fetchFromGitHub/rejected') {
+            const savedProjects = localStorage.getItem('projects');
+            if (savedProjects) {
+              try {
+                const parsedProjects = JSON.parse(savedProjects);
+                dispatch(setProjects(parsedProjects));
+              } catch (error) {
+                console.error('Ошибка при разборе данных из localStorage:', error);
+              }
+            }
+          }
+        })
+        .catch((error) => {
+          console.error('Ошибка при загрузке проектов с GitHub:', error);
+        });
     }
-  }, [dispatch, projects.length, projectStatus]);
+  }, [dispatch, projectStatus]);
 
   const filteredProjects = useMemo(() => {
     return projects.filter((project) =>
