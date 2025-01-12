@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo,useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../store';
 import { setProjects, fetchProjectsFromGitHub } from '../store/projectsSlice';
@@ -7,6 +7,7 @@ import { ProjectFilter } from '../components/ProjectFilter';
 import { ProjectList } from '../components/ProjectList';
 import { AddProjectForm } from '../components/AddProjectForm';
 import { Spinner } from '../components/Spinner';
+import { RefreshButton } from '../components/RefreshButton';
 import '../styles/Projects.css';
 
 export const Projects = () => {
@@ -18,29 +19,33 @@ export const Projects = () => {
   const [selectedTech, setSelectedTech] = useState<string>('All');
   const [showAddForm, setShowAddForm] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (projectStatus === 'idle') {
-      dispatch(fetchProjectsFromGitHub('NyamaNyama'))
-        .then((action) => {
-          if (action.type === 'projects/fetchFromGitHub/fulfilled') {
-            localStorage.setItem('projects', JSON.stringify(action.payload));
-          } else if (action.type === 'projects/fetchFromGitHub/rejected') {
-            const savedProjects = localStorage.getItem('projects');
-            if (savedProjects) {
-              try {
-                const parsedProjects = JSON.parse(savedProjects);
-                dispatch(setProjects(parsedProjects));
-              } catch (error) {
-                console.error('Ошибка при разборе данных из localStorage:', error);
-              }
+  const loadProjects = useCallback(() => {
+    dispatch(fetchProjectsFromGitHub('NyamaNyama'))
+      .then((action) => {
+        if (action.type === 'projects/fetchFromGitHub/fulfilled') {
+          localStorage.setItem('projects', JSON.stringify(action.payload));
+        } else if (action.type === 'projects/fetchFromGitHub/rejected') {
+          const savedProjects = localStorage.getItem('projects');
+          if (savedProjects) {
+            try {
+              const parsedProjects = JSON.parse(savedProjects);
+              dispatch(setProjects(parsedProjects));
+            } catch (error) {
+              console.error('Ошибка при разборе данных из localStorage:', error);
             }
           }
-        })
-        .catch((error) => {
-          console.error('Ошибка при загрузке проектов с GitHub:', error);
-        });
+        }
+      })
+      .catch((error) => {
+        console.error('Ошибка при загрузке проектов с GitHub:', error);
+      });
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (projectStatus === 'idle') {
+      loadProjects();
     }
-  }, [dispatch, projectStatus]);
+  }, [loadProjects, projectStatus]);
 
   const filteredProjects = useMemo(() => {
     return projects.filter((project) =>
@@ -64,6 +69,7 @@ export const Projects = () => {
         <>
           <h2>Мои проекты</h2>
           {projectError && <p className="error-message">Ошибка: {projectError}</p>}
+          <RefreshButton onClick={loadProjects} />
           <button onClick={() => setShowAddForm(true)} className="form-button">
             Добавить проект
           </button>

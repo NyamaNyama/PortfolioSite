@@ -1,0 +1,18 @@
+.refresh-button {
+    background-color: #00ff00;
+    color: #000;
+    border: 2px solid #00ff00;
+    padding: 10px 20px;
+    font-size: 1em;
+    font-family: 'Cascadia Code', monospace;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 10px 0;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .refresh-button:hover {
+    background-color: #000;
+    color: #00ff00;
+  }
+  
