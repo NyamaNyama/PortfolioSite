@@ -9,7 +9,9 @@ import { AddProjectForm } from '../components/AddProjectForm';
 import { Spinner } from '../components/Spinner';
 import { RefreshButton } from '../components/RefreshButton';
 import { isFulfilled, isRejected } from '@reduxjs/toolkit';
+import { loadFromLocalStorage, saveToLocalStorage } from '../utils/localStorage';
 import '../styles/Projects.css';
+import { IProject } from '../types/Project';
 
 export const Projects = () => {
   const projects = useSelector((state: RootState) => state.projects.items);
@@ -24,16 +26,15 @@ export const Projects = () => {
     dispatch(fetchProjectsFromGitHub('NyamaNyama'))
       .then((action) => {
         if (isFulfilled(action)) {
-          localStorage.setItem('projects', JSON.stringify(action.payload));
+          saveToLocalStorage('projects', action.payload);
         } else if (isRejected(action)) {
-          const savedProjects = localStorage.getItem('projects');
-          if (savedProjects) {
-            try {
-              const parsedProjects = JSON.parse(savedProjects);
-              dispatch(setProjects(parsedProjects));
-            } catch (error) {
-              console.error('Ошибка при разборе данных из localStorage:', error);
-            }
+          const savedProjects = loadFromLocalStorage<IProject[]>('projects');
+
+          if (savedProjects && Array.isArray(savedProjects)) {
+            dispatch(setProjects(savedProjects));
+            console.log('Проекты загружены из localStorage:', savedProjects);
+          } else {
+            console.warn('Данные в localStorage некорректны или отсутствуют.');
           }
         }
       })
