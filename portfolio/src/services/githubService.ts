@@ -11,27 +11,43 @@ interface GitHubRepo {
 }
   
 export const fetchRepos = async (username: string, token?: string): Promise<IProject[]> => {
-  const response = await axios.get<GitHubRepo[]>(`${GITHUB_API_URL}/users/${username}/repos`, {
-    headers: token ? { Authorization: `token ${token}` } : {},
-  });
+  try {
+    const response = await axios.get<GitHubRepo[]>(`${GITHUB_API_URL}/users/${username}/repos`, {
+      headers: token ? { Authorization: `token ${token}` } : {},
+    });
 
-  const repos = response.data; 
+    const repos = response.data;
 
-  const projects: IProject[] = await Promise.all(
-    repos.map(async (repo) => {
-      const languages = await fetchRepoLanguages(username, repo.name);
+    const projects: IProject[] = await Promise.all(
+      repos.map(async (repo) => {
+        try {
+          const languages = await fetchRepoLanguages(username, repo.name);
 
-      return {
-        id: repo.id,
-        title: repo.name,
-        description: repo.description || 'Описание не указано',
-        technologies: languages,
-        link: repo.html_url,
-      };
-    })
-  );
+          return {
+            id: repo.id,
+            title: repo.name,
+            description: repo.description || 'Описание не указано',
+            technologies: languages,
+            link: repo.html_url,
+          };
+        } catch (error) {
+          console.error(`Ошибка при загрузке языков для репозитория "${repo.name}":`, error);
+          return {
+            id: repo.id,
+            title: repo.name,
+            description: repo.description || 'Описание не указано',
+            technologies: [],
+            link: repo.html_url,
+          };
+        }
+      })
+    );
 
-  return projects;
+    return projects;
+  } catch (error) {
+      console.error('Ошибка при загрузке репозиториев с GitHub:', error);
+      throw new Error('Не удалось загрузить репозитории с GitHub. Проверьте имя пользователя и токен.');
+  }
 };
 
 const fetchRepoLanguages = async (username: string, repoName: string): Promise<string[]> => {
