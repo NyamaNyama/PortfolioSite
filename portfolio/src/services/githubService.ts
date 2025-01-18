@@ -2,6 +2,10 @@ import axios from 'axios';
 import { IProject } from '../types/Project';
 
 const GITHUB_API_URL = 'https://api.github.com';
+const DEFAULT_DESCRIPTION = 'Описание не указано';
+const ERROR_FETCH_LANGUAGES = 'Ошибка при загрузке языков для репозитория';
+const ERROR_FETCH_REPOS = 'Не удалось загрузить репозитории с GitHub. Проверьте имя пользователя и токен.';
+const ERROR_GENERAL_FETCH = 'Ошибка при загрузке репозиториев с GitHub';
 
 interface GitHubRepo {
     id: number;
@@ -26,16 +30,16 @@ export const fetchRepos = async (username: string, token?: string): Promise<IPro
           return {
             id: repo.id,
             title: repo.name,
-            description: repo.description || 'Описание не указано',
+            description: repo.description || DEFAULT_DESCRIPTION,
             technologies: languages,
             link: repo.html_url,
           };
         } catch (error) {
-          console.error(`Ошибка при загрузке языков для репозитория "${repo.name}":`, error);
+          console.error(`${ERROR_FETCH_LANGUAGES} "${repo.name}":`, error);
           return {
             id: repo.id,
             title: repo.name,
-            description: repo.description || 'Описание не указано',
+            description: repo.description || DEFAULT_DESCRIPTION,
             technologies: [],
             link: repo.html_url,
           };
@@ -45,8 +49,8 @@ export const fetchRepos = async (username: string, token?: string): Promise<IPro
 
     return projects;
   } catch (error) {
-      console.error('Ошибка при загрузке репозиториев с GitHub:', error);
-      throw new Error('Не удалось загрузить репозитории с GitHub. Проверьте имя пользователя и токен.');
+      console.error(ERROR_GENERAL_FETCH, error);
+      throw new Error(ERROR_FETCH_REPOS);
   }
 };
 
