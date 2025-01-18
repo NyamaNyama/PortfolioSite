@@ -8,6 +8,7 @@ import { ProjectList } from '../components/ProjectList';
 import { AddProjectForm } from '../components/AddProjectForm';
 import { Spinner } from '../components/Spinner';
 import { RefreshButton } from '../components/RefreshButton';
+import { isFulfilled, isRejected } from '@reduxjs/toolkit';
 import '../styles/Projects.css';
 
 export const Projects = () => {
@@ -22,9 +23,9 @@ export const Projects = () => {
   const loadProjects = useCallback(() => {
     dispatch(fetchProjectsFromGitHub('NyamaNyama'))
       .then((action) => {
-        if (action.type === 'projects/fetchFromGitHub/fulfilled') {
+        if (isFulfilled(action)) {
           localStorage.setItem('projects', JSON.stringify(action.payload));
-        } else if (action.type === 'projects/fetchFromGitHub/rejected') {
+        } else if (isRejected(action)) {
           const savedProjects = localStorage.getItem('projects');
           if (savedProjects) {
             try {
