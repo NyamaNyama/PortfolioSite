@@ -1,13 +1,17 @@
 import "../styles/Header.css"
 import { Link } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 
 
 export const Header = () => {
+    const { theme, toggleTheme } = useTheme();
+
     const handleDragStart = (event: React.DragEvent<HTMLAnchorElement>) => {
         event.preventDefault(); 
-      };
+    };
+
     return (
-    <header className="header">
+    <header className={`header ${theme}`}>
         <div className="company-name">
             <h1>ITxON</h1>
         </div>
@@ -18,6 +22,9 @@ export const Header = () => {
         <Link to="/projects" className="nav-link" onDragStart={handleDragStart}>Проекты</Link>
         <Link to="/contact" className="nav-link" onDragStart={handleDragStart}>Обратная связь</Link>
         </nav>
+        <button onClick={toggleTheme} className="theme-toggle">
+        {theme === 'light' ? '🌙 Тёмная' : '☀️ Светлая'}
+        </button>
     </header>
     );
 };
