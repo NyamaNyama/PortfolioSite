@@ -82,3 +82,29 @@
 .nav-link:last-child{
     padding-right: 0px;
 }
+
+.theme-toggle {
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-family: 'Cascadia Code', monospace;
+  color: #00ff00;
+  background: transparent;
+  border: none; 
+  cursor: pointer;
+  width: 120px; 
+  text-align: center; 
+  line-height: 1; 
+  overflow: hidden; 
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+}
+
+.theme-toggle:hover {
+  background-color: #00ff00;
+  color: #010101;
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
