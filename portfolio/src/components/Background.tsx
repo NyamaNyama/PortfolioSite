@@ -1,5 +1,8 @@
 import "../styles/Background.css"
+import { useTheme } from "../context/ThemeContext";
 
 export const Background = () =>{
-    return <div className="background"></div>;
+    const { theme } = useTheme();
+    
+    return <div className={`background ${theme}`}></div>;
 }

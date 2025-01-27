@@ -6,7 +6,6 @@
   }
 
 .footer {
-    background-color: #010101;
     color: #00FF00;
     text-align: center;
     padding: 20px;
@@ -17,6 +16,14 @@
     width: 100%;
     z-index: 1000;
   }
+
+.footer.light{
+  background-color: blue;
+  }
+
+.footer.dark{
+  background-color: #010101;
+}
 
   .social-links {
     display: flex;

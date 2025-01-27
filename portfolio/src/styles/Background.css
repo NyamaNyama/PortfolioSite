@@ -6,5 +6,12 @@
     height: 100%;
     background: url("../assets/Gifs/background.gif") center/cover no-repeat;
     z-index: 1; 
-     
+  }
+
+  .background.light{
+    background: url("../assets/Gifs/lightBackground.gif") center/cover no-repeat;
+    }
+  
+  .background.dark{
+    background: url("../assets/Gifs/darkBackground.gif") center/cover no-repeat;
   }
