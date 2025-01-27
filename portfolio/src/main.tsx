@@ -4,13 +4,16 @@ import {App} from './App.tsx'
 import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import {store} from './store'
+import { ThemeProvider } from './context/ThemeContext';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
+    <ThemeProvider>
       <BrowserRouter>
         <App />
       </BrowserRouter>
+      </ThemeProvider>
     </Provider>
   </StrictMode>,
 )
