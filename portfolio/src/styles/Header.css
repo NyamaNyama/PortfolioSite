@@ -1,111 +1,94 @@
 @font-face {
-    font-family: 'Cascadia Code';
-    src: url('../assets/Fonts/CascadiaCodePL-Regular.otf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-  }
+  font-family: 'Cascadia Code';
+  src: url('../assets/Fonts/CascadiaCodePL-Regular.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 @font-face {
-    font-family: 'Press Start';
-    src: url('../assets/Fonts/PressStart2P-Regular.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-  }  
+  font-family: 'Press Start';
+  src: url('../assets/Fonts/PressStart2P-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }  
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  .header {
-    width: 100%;
-     
-    padding: 0px 0px;
-    z-index: 1000; 
-    border: 2px solid #00ff00;
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
-    
-  }
+.header {
+  width: 100%;
+  min-height: 80px; 
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+  padding: 10px 20px;
+  background-color: #010101;
+  border-bottom: 2px solid #00ff00;
+  z-index: 1000;
+  position: relative;
+}
 
-  .header.dark{
-    background-color: #010101;
-  }
-
-  header.light{
-    background-color: blue;
-  }
-
-  .footer.light{
-  background-color: blue;
-  }
-
-.footer.dark{
+.header.dark {
   background-color: #010101;
 }
 
-.company-name{
-    color: #00ff00;
-    font-size: 16px;
-    font-family: 'Press Start', monospace;
-    font-weight: bold;
-    padding-left: 20px;
+.header.light {
+  background-color: blue;
 }
 
- .navigation{
-    display: flex;
-    justify-content: space-around; 
-    align-items: center;
-    user-select: none;
-    
- } 
+.company-name {
+  font-family: 'Press Start', monospace; 
+  font-size: 18px;
+  font-weight: bold;
+  color: #00ff00;
+  white-space: nowrap;
+}
 
- .nav-link {
-    display: flex;
-    justify-content: center; 
-    align-items: center;
-    color: #00ff00; 
-    text-decoration: none; 
-    font-family: 'Cascadia Code', monospace;
-    font-size: 15px;
-    padding: 10px 10px; 
-    background-color: transparent; 
-    border: 2px solid transparent;
-    transition: background-color 0.3s;
-    text-align: center;
-    width: 150px;
-    height: 90px; 
-  }
-  
+.navigation {
+  display: flex;
+  flex: 1;
+  gap: 15px; 
+  justify-content: center; 
+  align-items: center;
+  flex-wrap: wrap; 
+}
+
+.nav-link {
+  font-family: 'Cascadia Code', monospace; 
+  font-size: 16px;
+  text-decoration: none;
+  color: #00ff00;
+  text-align: center;
+  padding: 8px 15px;
+  background-color: transparent;
+  border: 2px solid transparent;
+  transition: background-color 0.3s, transform 0.2s;
+  flex: 0 1 auto; 
+  min-width: 120px; 
+}
+
 .nav-link:hover {
-    background-color: #00ff00; 
-    color: #010101; 
-  }
+  background-color: #00ff00;
+  color: #010101;
+}
 
-.nav-link:active{
-    transform: scale(0.95);
-  }
-.nav-link:last-child{
-    padding-right: 0px;
+.nav-link:active {
+  transform: scale(0.95);
 }
 
 .theme-toggle {
-  margin-left: 20px;
-  margin-right: 20px;
-  padding: 10px 20px;
-  font-size: 15px;
-  font-family: 'Cascadia Code', monospace;
+  font-family: 'Cascadia Code', monospace; 
+  font-size: 16px;
   color: #00ff00;
   background: transparent;
-  border: none; 
+  border: 2px solid #00ff00;
   cursor: pointer;
-  width: 120px; 
-  text-align: center; 
-  line-height: 1; 
-  overflow: hidden; 
-  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+  padding: 8px 15px;
+  text-align: center;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 .theme-toggle:hover {
@@ -115,4 +98,50 @@
 
 .theme-toggle:active {
   transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+  .navigation {
+    flex-direction: column; 
+    gap: 10px; 
+  }
+
+  .nav-link {
+    font-size: 14px; 
+    padding: 6px 10px;
+    width: 100%; 
+    text-align: center;
+  }
+
+  .theme-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 14px; 
+    padding: 6px 10px;
+  }
+
+  .company-name {
+    font-size: 14px; 
+  }
+}
+
+@media (max-width: 480px) {
+  .navigation {
+    gap: 8px; 
+  }
+
+  .nav-link {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+
+  .theme-toggle {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+
+  .company-name {
+    font-size: 12px; 
+  }
 }

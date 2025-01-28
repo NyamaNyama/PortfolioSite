@@ -56,3 +56,31 @@
     margin-top: 10px;
     font-size: 14px;
   }
+
+  
+  @media (max-width: 768px) {
+    .footer .social-link {
+      width: 30px;
+      height: 30px;
+    }
+  
+    .footer-email {
+      font-size: 12px;
+    }
+  }
+  
+
+  @media (max-width: 480px) {
+    .footer {
+      padding: 10px;
+    }
+  
+    .footer .social-link {
+      width: 25px;
+      height: 25px;
+    }
+  
+    .footer-email {
+      font-size: 10px;
+    }
+  }
