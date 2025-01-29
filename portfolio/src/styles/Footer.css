@@ -6,7 +6,6 @@
   }
 
 .footer {
-    background-color: #010101;
     color: #00FF00;
     text-align: center;
     padding: 20px;
@@ -17,6 +16,14 @@
     width: 100%;
     z-index: 1000;
   }
+
+.footer.light{
+  background-color: blue;
+  }
+
+.footer.dark{
+  background-color: #010101;
+}
 
   .social-links {
     display: flex;
@@ -48,4 +55,32 @@
     font-family: 'Cascadia Code', monospace;
     margin-top: 10px;
     font-size: 14px;
+  }
+
+  
+  @media (max-width: 768px) {
+    .footer .social-link {
+      width: 30px;
+      height: 30px;
+    }
+  
+    .footer-email {
+      font-size: 12px;
+    }
+  }
+  
+
+  @media (max-width: 480px) {
+    .footer {
+      padding: 10px;
+    }
+  
+    .footer .social-link {
+      width: 25px;
+      height: 25px;
+    }
+  
+    .footer-email {
+      font-size: 10px;
+    }
   }

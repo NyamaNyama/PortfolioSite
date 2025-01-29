@@ -1,5 +1,6 @@
 import "../styles/Footer.css"
 import { ISocialLink } from "../types/SocialLink"
+import { useTheme } from "../context/ThemeContext";
 
 export interface FooterProps{
     socialLinks: ISocialLink[];
@@ -8,8 +9,9 @@ export interface FooterProps{
 
 
 export const Footer = ({ socialLinks, email }: FooterProps) =>{
+    const { theme } = useTheme();
       return (
-        <footer className="footer">
+        <footer className={`footer ${theme}`}>
             <div className="social-links">
                 {socialLinks.map((link)=> (
                     <a
